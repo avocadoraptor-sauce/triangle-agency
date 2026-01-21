@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triangle Agency</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Space+Grotesk:wght@400;600&display=swap");
+
+      :root {
+        --ink: #1b1b1d;
+        --paper: #f7f3ea;
+        --accent: #1f6fff;
+        --accent-deep: #0b2f8a;
+        --glow: rgba(31, 111, 255, 0.25);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background: radial-gradient(circle at top, #fff8e6 0%, var(--paper) 45%, #ece6d8 100%);
+        font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+      }
+
+      .board {
+        width: min(900px, 100%);
+        background: #fffdf7;
+        border-radius: 28px;
+        padding: 36px 40px;
+        box-shadow: 0 28px 55px rgba(24, 20, 15, 0.18);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .board::before {
+        content: "";
+        position: absolute;
+        inset: -20% 40% auto -10%;
+        height: 220px;
+        background: linear-gradient(140deg, rgba(31, 111, 255, 0.18), rgba(255, 255, 255, 0));
+        border-radius: 50%;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 28px;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "Fraunces", "Times New Roman", serif;
+        font-size: clamp(28px, 4vw, 38px);
+        letter-spacing: 0.5px;
+      }
+
+      p.subtitle {
+        margin: 0;
+        color: #6a655f;
+        font-size: 15px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+
+      .card {
+        background: #fdfbf6;
+        border-radius: 20px;
+        padding: 18px;
+        border: 1px solid #eee6d6;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: #8a837b;
+      }
+
+      .value {
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .value.chaos {
+        color: var(--accent);
+        text-shadow: 0 6px 18px var(--glow);
+      }
+
+      .image-slot {
+        border-radius: 22px;
+        padding: 24px;
+        border: 1px dashed #c3bcae;
+        background: linear-gradient(135deg, #fffdf8 0%, #f0e9db 100%);
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 14px;
+      }
+
+      .image-slot .frame {
+        width: min(340px, 80%);
+        aspect-ratio: 4 / 3;
+        border-radius: 16px;
+        border: 2px solid #b9b3a7;
+        background: repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.7),
+          rgba(255, 255, 255, 0.7) 12px,
+          rgba(240, 236, 227, 0.9) 12px,
+          rgba(240, 236, 227, 0.9) 24px
+        );
+      }
+
+      .image-slot .caption {
+        font-size: 14px;
+        color: var(--accent-deep);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 600px) {
+        .board {
+          padding: 28px 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="board">
+      <header>
+        <h1>Triangle Agency Brief</h1>
+        <p class="subtitle">Live status feed for the current investigation.</p>
+      </header>
+
+      <section class="grid">
+        <div class="card">
+          <span class="label">Chaos Pool</span>
+          <span class="value chaos">{{ chaos_pool }}</span>
+        </div>
+        <div class="card">
+          <span class="label">Loose Ends Counter</span>
+          <span class="value">{{ loose_ends }}</span>
+        </div>
+      </section>
+
+      <section class="image-slot">
+        <div class="frame" aria-hidden="true"></div>
+        <div class="caption">{{ image_subtitle }}</div>
+      </section>
+    </main>
+  </body>
+</html>
