@@ -1,6 +1,4 @@
-import { Client } from 'boardgame.io/react';
-import { TriangleAgency} from './Game';
+import './App.css';
+import AppShell from './components/AppShell';
 
-const App = Client({ game: TriangleAgency  });
-
-export default App;
+export default AppShell;

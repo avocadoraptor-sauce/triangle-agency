@@ -1,0 +1,16 @@
+{
+  "gameId": 0,
+  "public": {
+    "chaosPool": 0,
+    "looseEnds": 0,
+    "image": [],
+    "description": "" 
+  },
+  "players": [
+    ],
+  "gm": {
+    "notes": [],
+    "playerNotes": {},
+    "playerSignals": {}
+  }
+}

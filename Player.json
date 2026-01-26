@@ -1,0 +1,15 @@
+{
+        "playerId": 0,
+        "name": "",
+        "anomaly": "",
+        "powers": [],
+        "reality": "",
+        "realityConnectionPower": "",
+        "competency": "",
+        "qas": [
+          { "quality": "", "uses": 0 },
+          { "quality": "", "uses": 0 },
+          { "quality": "", "uses": 0 }
+        ],
+        "requisition": ""
+      }
