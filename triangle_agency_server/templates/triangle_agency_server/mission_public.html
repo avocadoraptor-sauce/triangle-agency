@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mission Public Dossiers</title>
+    <title>Mission Public Dossier</title>
     <style>
       :root {
         --paper: #f4efe6;
@@ -172,62 +172,75 @@
         }
       }
     </style>
+    <script>
+      async function createPatchRequest(body) {
+        const res = await fetch("/mission-public/1/", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+          });
+          console.log(await res.json());
+      }
+      function addListeners() {
+      
+        document.getElementById("inc-chaos").addEventListener("click", async () => {
+          createPatchRequest({chaos_pool: 1})
+        });
+        
+        document.getElementById("dec-chaos").addEventListener("click", async () => {
+          createPatchRequest({chaos_pool: -1})
+        });
+      }
+      document.addEventListener("DOMContentLoaded", addListeners)
+    
+    </script>
   </head>
   <body>
     <div class="wrap">
       <header>
         <div>
           <div class="title">Private Eye Dossier</div>
-          <h1>Mission Public Records</h1>
+          <h1>Mission Public Record</h1>
         </div>
         <div class="stamp">Classified</div>
       </header>
 
       <section class="dossiers">
-        {% for mission in missions %}
-          <article class="dossier">
-            <div class="dossier-header">
-              <div class="mission-id">Case File {{ mission.mission.game_id }}</div>
-              <div class="status">Public Brief</div>
+        <article class="dossier">
+          <div class="dossier-header">
+            <div class="mission-id">Case File {{ mission.mission.game_id }}</div>
+            <div class="status">Public Brief</div>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h3>Chaos Pool</h3>
+              <div class="metric">{{ mission.chaos_pool }}</div>
+              <button id="inc-chaos">+</button>
+              <button id="dec-chaos">-</button>
             </div>
-            <div class="grid">
-              <div class="panel">
-                <h3>Chaos Pool</h3>
-                <div class="metric">{{ mission.chaos_pool }}</div>
-              </div>
-              <div class="panel">
-                <h3>Loose Ends</h3>
-                <div class="metric">{{ mission.loose_ends }}</div>
-              </div>
-              <div class="panel">
-                <h3>Evidence Image</h3>
-                <div class="image-block">
-                  <div class="image-meta">Type: {{ mission.image.image_type|default:"N/A" }}</div>
-                  <div class="image-meta">Asset: {{ mission.image.asset_id|default:"N/A" }}</div>
-                  <div class="image-meta">URL: {{ mission.image.url|default:"N/A" }}</div>
-                </div>
-              </div>
-              <div class="panel">
-                <h3>Description</h3>
-                <div class="description">
-                  {{ mission.description|default:"No public description on file." }}
-                </div>
+            <div class="panel">
+              <h3>Loose Ends</h3>
+              <div class="metric">{{ mission.loose_ends }}</div>
+            </div>
+            <div class="panel">
+              <h3>Evidence Image</h3>
+              <div class="image-block">
+                <div class="image-meta">Type: {{ mission.image.image_type|default:"N/A" }}</div>
+                <div class="image-meta">Asset: {{ mission.image.asset_id|default:"N/A" }}</div>
+                <div class="image-meta">URL: {{ mission.image.url|default:"N/A" }}</div>
               </div>
             </div>
-          </article>
-        {% empty %}
-          <article class="dossier">
-            <div class="dossier-header">
-              <div class="mission-id">No Active Case Files</div>
-              <div class="status">Awaiting Intake</div>
+            <div class="panel">
+              <h3>Description</h3>
+              <div class="description">
+                {{ mission.description|default:"No public description on file." }}
+              </div>
             </div>
-            <div class="description">
-              The bureau has not published any mission briefs yet.
-            </div>
-          </article>
-        {% endfor %}
+          </div>
+        </article>
       </section>
-
       <footer>Triangle Agency Bureau - Public Records</footer>
     </div>
   </body>

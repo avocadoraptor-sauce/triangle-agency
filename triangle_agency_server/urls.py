@@ -1,7 +1,16 @@
 from django.urls import path
 
-from . import views
+from .views import GMMissionView, PublicDossierView
 
 urlpatterns = [
-    path("mission-public/", views.mission_public_dossier, name="mission-public"),
+    path(
+        "mission-public/",
+        GMMissionView.as_view(),
+        name="mission-public",
+    ),
+    path(
+        "mission-public/<int:mission_public_id>/",
+        GMMissionView.as_view(),
+        name="mission-public-detail",
+    ),
 ]

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 
 # TODO: Decide if the model names are appropriate
 class Mission(models.Model):
@@ -26,6 +27,10 @@ class MissionPublic(models.Model):
 
     def __str__(self) -> str:
         return f"MissionPublic {self.mission.mission_name}"
+    def modify_chaos(self, delta:int):
+        MissionPublic.objects.filter(pk=self.pk).update(
+            chaos_pool=F("chaos_pool") + delta
+        )
 
 
 class MissionImage(models.Model):
