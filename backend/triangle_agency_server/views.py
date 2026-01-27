@@ -34,12 +34,8 @@ class PublicDossierView(View):
 class GMMissionView(PublicDossierView):
     def get(self, request, mission_public_id=None):
         mission = self._get(request, mission_public_id)
-        return render(
-            request,
-            "triangle_agency_server/mission_public.html",
-            {"mission": mission},
-        )
-    
+        return JsonResponse(mission) 
+
     def patch(self, request, mission_public_id=None):
         mission_public = get_object_or_404(MissionPublic, pk=mission_public_id)
         raw = request.body  # bytes

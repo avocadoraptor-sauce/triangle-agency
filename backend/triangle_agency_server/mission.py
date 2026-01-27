@@ -1,5 +1,8 @@
 from django.db import models
 from django.db.models import F
+"""
+TODO: Eventually generate this from proto or other codegen */
+"""
 
 # TODO: Decide if the model names are appropriate
 class Mission(models.Model):
