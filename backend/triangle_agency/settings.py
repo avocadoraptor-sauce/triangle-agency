@@ -6,6 +6,9 @@ SECRET_KEY = "django-insecure-change-me"
 DEBUG = True
 ALLOWED_HOSTS = []
 
+# TODO: Revisit before deploying to web.
+CORS_ORIGIN_ALLOW_ALL = True
+
 INSTALLED_APPS = [
     "triangle_agency_server",
     "django.contrib.admin",
