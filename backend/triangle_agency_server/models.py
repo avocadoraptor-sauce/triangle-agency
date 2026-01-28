@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 
 # TODO: Decide if the model names are appropriate
 class Mission(models.Model):
