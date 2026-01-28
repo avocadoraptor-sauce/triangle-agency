@@ -9,7 +9,7 @@ pip install -r requirements.txt
 alias manage="python3 manage.py"
 alias run="python3 manage.py runserver"
 alias migrate="python3 manage.py migrate"
-alias migrate="python3 manage.py makemigrations "
+alias makemigrations="python3 manage.py makemigrations"
 alias check=".githooks/pre-push"
 
 # Hooks

@@ -1,9 +1,10 @@
 /* https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/ */
-
-import { DMViewProps, MissionPublic } from "../types";
+import type {paths, components } from "../../gen/schema"
+import { DMViewProps } from "../types";
 import './dmview.css';
 import axios from "axios";
 
+type MissionPublic = components["schemas"]["MissionPublicSchema"];
 type UpdateData = {
   chaos_pool: number | undefined;
 }
@@ -16,7 +17,7 @@ const DMView = (props: DMViewProps) => {
         * TODO: the app should show a list of missions and the one we pick
         * should be the one we load.
         */
-      const {data: response} = await axios.patch("/mission-public/1/", update_data);
+      const {data: response} = await axios.patch("api/mission-public/1/", update_data);
       console.log(response);
     } catch(error) {
       console.error(error);
