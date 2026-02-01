@@ -24,6 +24,14 @@ class MissionPublic(models.Model):
         MissionPublic.objects.filter(pk=self.pk).update(
             chaos_pool=F("chaos_pool") + delta
         )
+    def modify_loose_ends(self, delta:int):
+        MissionPublic.objects.filter(pk=self.pk).update(
+            loose_ends=F("loose_ends") + delta
+        )
+    def modify_description(self, new_description:str):
+        MissionPublic.objects.filter(pk=self.pk).update(
+            description=new_description
+        )
 
 
 class MissionImage(models.Model):

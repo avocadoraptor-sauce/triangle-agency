@@ -5,9 +5,11 @@ import './dmview.css';
 import axios from "axios";
 
 type MissionPublic = components["schemas"]["MissionPublicSchema"];
-type UpdateData = {
-  chaos_pool: number | undefined;
-}
+type UpdateData = Partial<{
+  chaos_pool: number;
+  loose_ends: number;
+  description: string;
+}>
 
 const DMView = (props: DMViewProps) => {
   const {mission}: {mission: MissionPublic | null} = props;
@@ -49,6 +51,8 @@ const DMView = (props: DMViewProps) => {
             <div className="panel">
               <h3>Loose Ends</h3>
               <div className="metric">{ mission.loose_ends }</div>
+              <button id="inc-loose-ends" onClick={() => updateMission({loose_ends: 1})}>+</button>
+              <button id="dec-loose-ends" onClick={() => updateMission({loose_ends: -1})}>-</button>
             </div>
             <div className="panel">
               <h3>Evidence Image</h3>

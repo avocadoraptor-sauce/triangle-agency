@@ -15,7 +15,6 @@ class MissionSchema(ModelSchema):
         model = Mission
         fields = "__all__"
 
-
 class MissionPublicSchema(ModelSchema):
     class Meta:
         model = MissionPublic
@@ -28,6 +27,7 @@ def get_mission(request, mission_public_id: int):
         return None
     mission_public = get_object_or_404(MissionPublic, pk=mission_public_id)
     # Hack to recursively serialize.
+    # TODO: figure out proper way to do this with ninja
     partial_mission = model_to_dict(mission_public)
     print(partial_mission)
     partial_mission["mission_id"] = 1
@@ -40,5 +40,11 @@ def patch_mission(request, mission_public_id: int):
     data = json.loads(raw.decode("utf-8")) if raw else {}
     if "chaos_pool" in data:
         mission_public.modify_chaos(data["chaos_pool"])
+        return {}
+    if "loose_ends" in data:
+        mission_public.modify_loose_ends(data["loose_ends"])
+        return {}
+    if "description" in data:
+        mission_public.modify_description(data["description"])
         return {}
     
