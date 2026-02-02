@@ -1,0 +1,31 @@
+{
+  "qualities": {
+    "Attentiveness": {
+      "description": "Showing attention to detail, understanding complicated information, and discovering what someone is trying to hide."
+    },
+    "Duplicity": {
+      "description": "Lying, convincing while unconvinced, and supporting while internally unsupportive."
+    },
+    "Dynamism": {
+      "description": "Aggressing, dominating, taking action, and using force to get your point across."
+    },
+    "Empathy": {
+      "description": "Relating to other people, expressing concern, finding weaknesses, and connecting."
+    },
+    "Initiative": {
+      "description": "Forward thinking, moving quickly, and handling things before they become a problem."
+    },
+    "Persistence": {
+      "description": "Refusing to back down, putting pressure on, overwhelming and irritating into action."
+    },
+    "Presence": {
+      "description": "Standing out in a room, commanding a group, inspiring and intimidating."
+    },
+    "Professionalism": {
+      "description": "Showing poise under pressure, resisting distraction, interrupting mind-altering effects."
+    },
+    "Subtlety": {
+      "description": "Working quietly, avoiding unnecessary attention, and performing actions with careful precision."
+    }
+  }
+}
