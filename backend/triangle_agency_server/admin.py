@@ -1,8 +1,7 @@
 from django.contrib import admin
 
-from .models import Mission, MissionGM, MissionImage, MissionPublic
+from .models import Mission, Player, QualityAssurance
 
 admin.site.register(Mission)
-admin.site.register(MissionPublic)
-admin.site.register(MissionImage)
-admin.site.register(MissionGM)
+admin.site.register(Player)
+admin.site.register(QualityAssurance)

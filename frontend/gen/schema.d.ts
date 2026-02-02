@@ -26,12 +26,12 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** MissionPublicSchema */
-        MissionPublicSchema: {
+        /** MissionSchema */
+        MissionSchema: {
             /** ID */
             id?: number | null;
-            /** Mission */
-            mission: number;
+            /** Mission Name */
+            mission_name: string;
             /**
              * Chaos Pool
              * @default 0
@@ -44,6 +44,10 @@ export interface components {
             loose_ends: number;
             /** Description */
             description?: string | null;
+            /** Url */
+            url?: string | null;
+            /** Players */
+            players: number[];
         };
     };
     responses: never;
@@ -71,7 +75,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MissionPublicSchema"];
+                    "application/json": components["schemas"]["MissionSchema"];
                 };
             };
         };

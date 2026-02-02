@@ -1,18 +1,21 @@
 /* https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/ */
 import type {paths, components } from "../../gen/schema"
-import { DMViewProps } from "../types";
 import './dmview.css';
 import axios from "axios";
 
-type MissionPublic = components["schemas"]["MissionPublicSchema"];
+type Mission = components["schemas"]["MissionSchema"];
 type UpdateData = Partial<{
   chaos_pool: number;
   loose_ends: number;
   description: string;
 }>
 
+type DMViewProps = {
+  mission: Mission | null;
+}
+
 const DMView = (props: DMViewProps) => {
-  const {mission}: {mission: MissionPublic | null} = props;
+  const {mission} = props;
   const updateMission = async (update_data: UpdateData) => {
     try {
       /*

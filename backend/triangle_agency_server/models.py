@@ -1,62 +1,57 @@
 from django.db import models
 from django.db.models import F
 
-# TODO: Decide if the model names are appropriate
+# Determine if relationship between Mission and Player is appropriate
 class Mission(models.Model):
-    mission_name= models.TextField(blank=True)
-    def __str__(self) -> str:
-        return f"Mission {self.mission_name}"
-
-
-class MissionPublic(models.Model):
-    mission = models.OneToOneField(
-        "Mission",
-        related_name="public",
-        on_delete=models.CASCADE,
-    )
+    mission_name= models.TextField()
     chaos_pool = models.IntegerField(default=0)
     loose_ends = models.IntegerField(default=0)
     description = models.TextField(blank=True)
+    players = models.ManyToManyField("Player")
 
-    def __str__(self) -> str:
-        return f"MissionPublic {self.mission.mission_name}"
-    def modify_chaos(self, delta:int):
-        MissionPublic.objects.filter(pk=self.pk).update(
-            chaos_pool=F("chaos_pool") + delta
-        )
-    def modify_loose_ends(self, delta:int):
-        MissionPublic.objects.filter(pk=self.pk).update(
-            loose_ends=F("loose_ends") + delta
-        )
-    def modify_description(self, new_description:str):
-        MissionPublic.objects.filter(pk=self.pk).update(
-            description=new_description
-        )
-
-
-class MissionImage(models.Model):
-    mission_public = models.OneToOneField(
-        "MissionPublic",
-        related_name="image",
-        on_delete=models.CASCADE,
-    )
-    image_type = models.CharField(max_length=50, blank=True)
-    asset_id = models.CharField(max_length=255, blank=True)
+    # Img fields
     url = models.URLField(blank=True)
 
     def __str__(self) -> str:
-        return self.asset_id or "MissionImage"
+        return f"Mission {self.mission_name}"
+    def modify_chaos(self, delta:int):
+        Mission.objects.filter(pk=self.pk).update(
+            chaos_pool=F("chaos_pool") + delta
+        )
+    def modify_loose_ends(self, delta:int):
+        Mission.objects.filter(pk=self.pk).update(
+            loose_ends=F("loose_ends") + delta
+        )
+    def modify_description(self, new_description:str):
+        Mission.objects.filter(pk=self.pk).update(
+            description=new_description
+        )
 
-# TODO: decide Structure of this later
-class MissionGM(models.Model):
-    mission = models.OneToOneField(
-        "Mission",
-        related_name="gm",
-        on_delete=models.CASCADE,
-    )
-    notes = models.JSONField(default=list, blank=True)
-    player_notes = models.JSONField(default=dict, blank=True)
-    player_signals = models.JSONField(default=dict, blank=True)
+class QualityAssurance(models.Model):
+
+    class Quality(models.TextChoices):
+        ATTENTIVENESS = "Attentiveness", "Attentiveness"
+        DUPLICITY = "Duplicity", "Duplicity"
+        DYNAMISM = "Dynamism", "Dynamism"
+        EMPATHY = "Empathy", "Empathy"
+        INITIATIVE = "Initiative", "Initiative"
+        PERSISTENCE = "Persistence", "Persistence"
+        PRESENCE = "Presence", "Presence"
+        PROFESSIONALISM = "Professionalism", "Professionalism"
+        SUBTLETY = "Subtlety", "Subtlety"
+
+    quality = models.TextField(choices=Quality.choices, default=Quality.ATTENTIVENESS)
+    available_qas = models.IntegerField(default=0)
+    max_qas = models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return f"MissionGM {self.mission_name}"
+        return f"Quality {self.quality}"
+    
+class Player(models.Model):
+    player_name= models.TextField(blank=True)
+    # Players will always have 9 categories of available_qas
+    qas = models.ManyToManyField(QualityAssurance)
+    missions = models.ManyToManyField(Mission)
+
+    def __str__(self) -> str:
+        return f"Player {self.player_name}"
