@@ -28,6 +28,8 @@ export interface components {
     schemas: {
         /** MissionSchema */
         MissionSchema: {
+            /** Players */
+            players: components["schemas"]["PlayerSchema"][];
             /** ID */
             id?: number | null;
             /** Mission Name */
@@ -46,8 +48,39 @@ export interface components {
             description?: string | null;
             /** Url */
             url?: string | null;
-            /** Players */
-            players: number[];
+        };
+        /** PlayerSchema */
+        PlayerSchema: {
+            /** Qas */
+            qas: components["schemas"]["QualityAssuranceSchema"][];
+            /** ID */
+            id?: number | null;
+            /** Player Name */
+            player_name?: string | null;
+            /** Missions */
+            missions: number[];
+        };
+        /** QualityAssuranceSchema */
+        QualityAssuranceSchema: {
+            /** ID */
+            id?: number | null;
+            /**
+             * Quality
+             * @default Attentiveness
+             */
+            quality: string;
+            /**
+             * Available Qas
+             * @default 0
+             */
+            available_qas: number;
+            /**
+             * Max Qas
+             * @default 0
+             */
+            max_qas: number;
+            /** Description */
+            readonly description: string;
         };
     };
     responses: never;
