@@ -1,11 +1,13 @@
 import json
 import os
 from typing import List
-from django.shortcuts import get_object_or_404
-from pydantic import computed_field
-from .models import Mission, Player, QualityAssurance
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from ninja import ModelSchema, NinjaAPI
+from pydantic import computed_field
+
+from .models import Mission, Player, QualityAssurance
+
 
 def load_json_data(file_name):
     file_path = os.path.join(settings.BASE_DIR, 'triangle_agency', 'static', file_name)
@@ -17,17 +19,20 @@ def load_json_data(file_name):
         print(f"Error: The file {file_name} was not found at {file_path}")
         return None
 
+
 QUALITIES = load_json_data('qualities.json')
-api = NinjaAPI()
+
 
 class QualityAssuranceSchema(ModelSchema):
     @computed_field
+    @property
     def description(self) -> str:
-        return QUALITIES['qualities'][self.quality]['description'] # pyright: ignore[reportOptionalSubscript, reportAttributeAccessIssue]
+        return QUALITIES["qualities"][self.quality]['description']
 
     class Meta:
         model = QualityAssurance
         fields = "__all__"
+
 
 class PlayerSchema(ModelSchema):
     qas: List[QualityAssuranceSchema]
@@ -36,23 +41,22 @@ class PlayerSchema(ModelSchema):
         model = Player
         fields = "__all__"
 
+
 class MissionSchema(ModelSchema):
     players: List[PlayerSchema]
-
     class Meta:
         model = Mission
         fields = "__all__"
 
 
+api = NinjaAPI()
 
-@api.get("mission-public/{mission_public_id}/", response=MissionSchema)
-def get_mission(request, mission_public_id: int):
-    if mission_public_id is None:
+@api.get("mission/{mission_id}/", response=MissionSchema)
+def get_mission(request, mission_id: int):
+    if mission_id is None:
         return None
-    mission_public = get_object_or_404(Mission, pk=mission_public_id)
-    serialized_data = MissionSchema.from_orm(mission_public).dict()
-    print("Serialized Data:", serialized_data)
-    return serialized_data
+    mission = get_object_or_404(Mission, pk=mission_id)
+    return mission
 
 @api.patch("mission-public/{mission_public_id}/")
 def patch_mission(request, mission_public_id: int):
@@ -68,4 +72,3 @@ def patch_mission(request, mission_public_id: int):
     if "description" in data:
         mission_public.modify_description(data["description"])
         return {}
-    

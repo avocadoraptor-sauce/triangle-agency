@@ -7,7 +7,7 @@ class Mission(models.Model):
     chaos_pool = models.IntegerField(default=0)
     loose_ends = models.IntegerField(default=0)
     description = models.TextField(blank=True)
-    players = models.ManyToManyField("Player")
+    players = models.ManyToManyField("Player", blank=True)
 
     # Img fields
     url = models.URLField(blank=True)
@@ -51,7 +51,7 @@ class Player(models.Model):
     player_name= models.TextField(blank=True)
     # Players will always have 9 categories of available_qas
     qas = models.ManyToManyField(QualityAssurance)
-    missions = models.ManyToManyField(Mission)
+    missions = models.ManyToManyField(Mission, blank=True)
 
     def __str__(self) -> str:
         return f"Player {self.player_name}"

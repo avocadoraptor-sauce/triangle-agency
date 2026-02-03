@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/mission-public/{mission_public_id}/": {
+    "/api/mission/{mission_id}/": {
         parameters: {
             query?: never;
             header?: never;
@@ -13,6 +13,22 @@ export interface paths {
         };
         /** Get Mission */
         get: operations["triangle_agency_server_views_get_mission"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mission-public/{mission_public_id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
         put?: never;
         post?: never;
         delete?: never;
@@ -96,7 +112,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                mission_public_id: number;
+                mission_id: number;
             };
             cookie?: never;
         };
