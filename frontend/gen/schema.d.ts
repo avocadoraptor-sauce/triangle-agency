@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/mission-public/{mission_public_id}/": {
+    "/api/mission/{mission_id}/": {
         parameters: {
             query?: never;
             header?: never;
@@ -13,6 +13,22 @@ export interface paths {
         };
         /** Get Mission */
         get: operations["triangle_agency_server_views_get_mission"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mission-public/{mission_public_id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
         put?: never;
         post?: never;
         delete?: never;
@@ -28,6 +44,8 @@ export interface components {
     schemas: {
         /** MissionSchema */
         MissionSchema: {
+            /** Players */
+            players: components["schemas"]["PlayerSchema"][];
             /** ID */
             id?: number | null;
             /** Mission Name */
@@ -46,8 +64,39 @@ export interface components {
             description?: string | null;
             /** Url */
             url?: string | null;
-            /** Players */
-            players: number[];
+        };
+        /** PlayerSchema */
+        PlayerSchema: {
+            /** Qas */
+            qas: components["schemas"]["QualityAssuranceSchema"][];
+            /** ID */
+            id?: number | null;
+            /** Player Name */
+            player_name?: string | null;
+            /** Missions */
+            missions: number[];
+        };
+        /** QualityAssuranceSchema */
+        QualityAssuranceSchema: {
+            /** ID */
+            id?: number | null;
+            /**
+             * Quality
+             * @default Attentiveness
+             */
+            quality: string;
+            /**
+             * Available Qas
+             * @default 0
+             */
+            available_qas: number;
+            /**
+             * Max Qas
+             * @default 0
+             */
+            max_qas: number;
+            /** Description */
+            readonly description: string;
         };
     };
     responses: never;
@@ -63,7 +112,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                mission_public_id: number;
+                mission_id: number;
             };
             cookie?: never;
         };

@@ -22,7 +22,6 @@ build/
 .parcel-cache/
 
 # IDE/editor
-.vscode/
 .idea/
 
 # OS

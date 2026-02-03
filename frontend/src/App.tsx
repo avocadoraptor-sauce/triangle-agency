@@ -12,7 +12,7 @@ function App() {
          * TODO: the app should show a list of missions and the one we pick
          * should be the one we load.
          */
-        const {data: response} = await axios.get("api/mission-public/1");
+        const {data: response} = await axios.get("api/mission/1");
         console.log(response);
         setMission(response);
       } catch(error) {
