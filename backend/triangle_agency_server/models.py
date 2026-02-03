@@ -13,7 +13,8 @@ class Mission(models.Model):
     url = models.URLField(blank=True)
 
     def __str__(self) -> str:
-        return f"Mission {self.mission_name}"
+        return f"{self.mission_name}"
+
     def modify_chaos(self, delta:int):
         Mission.objects.filter(pk=self.pk).update(
             chaos_pool=F("chaos_pool") + delta
@@ -39,19 +40,17 @@ class QualityAssurance(models.Model):
         PRESENCE = "Presence", "Presence"
         PROFESSIONALISM = "Professionalism", "Professionalism"
         SUBTLETY = "Subtlety", "Subtlety"
-
-    quality = models.TextField(choices=Quality.choices, default=Quality.ATTENTIVENESS)
-    available_qas = models.IntegerField(default=0)
-    max_qas = models.IntegerField(default=0)
+    quality = models.TextField(choices=Quality.choices, default=Quality.ATTENTIVENESS, blank=False)
+    player = models.ForeignKey("Player", editable=False, blank=False, on_delete=models.CASCADE, related_name="qas")
+    available_qas = models.IntegerField(default=3, blank=False)
+    max_qas = models.IntegerField(default=3, blank=False)
 
     def __str__(self) -> str:
-        return f"Quality {self.quality}"
+        return f"{self.player}: {self.quality}"
     
 class Player(models.Model):
     player_name= models.TextField(blank=True)
-    # Players will always have 9 categories of available_qas
-    qas = models.ManyToManyField(QualityAssurance)
     missions = models.ManyToManyField(Mission, blank=True)
 
     def __str__(self) -> str:
-        return f"Player {self.player_name}"
+        return f"{self.player_name}"
