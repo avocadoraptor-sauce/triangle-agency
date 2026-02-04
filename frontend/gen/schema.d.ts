@@ -4,6 +4,23 @@
  */
 
 export interface paths {
+    "/api/missions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Missions */
+        get: operations["triangle_agency_server_views_get_missions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/mission/{mission_id}/": {
         parameters: {
             query?: never;
@@ -18,22 +35,6 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mission-public/{mission_public_id}/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
         /** Patch Mission */
         patch: operations["triangle_agency_server_views_patch_mission"];
         trace?: never;
@@ -42,6 +43,15 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** MissionSummarySchema */
+        MissionSummarySchema: {
+            /** ID */
+            id?: number | null;
+            /** Mission Name */
+            mission_name: string;
+            /** Description */
+            description?: string | null;
+        };
         /** MissionSchema */
         MissionSchema: {
             /** Players */
@@ -85,14 +95,16 @@ export interface components {
              * @default Attentiveness
              */
             quality: string;
+            /** Player */
+            player: number;
             /**
              * Available Qas
-             * @default 0
+             * @default 3
              */
             available_qas: number;
             /**
              * Max Qas
-             * @default 0
+             * @default 3
              */
             max_qas: number;
             /** Description */
@@ -107,6 +119,26 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    triangle_agency_server_views_get_missions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MissionSummarySchema"][];
+                };
+            };
+        };
+    };
     triangle_agency_server_views_get_mission: {
         parameters: {
             query?: never;
@@ -134,7 +166,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                mission_public_id: number;
+                mission_id: number;
             };
             cookie?: never;
         };
