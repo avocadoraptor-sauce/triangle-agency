@@ -49,7 +49,19 @@ class MissionSchema(ModelSchema):
         fields = "__all__"
 
 
+class MissionSummarySchema(ModelSchema):
+    class Meta:
+        model = Mission
+        fields = ["id", "mission_name", "description"]
+
+
 api = NinjaAPI()
+
+
+@api.get("missions/", response=List[MissionSummarySchema])
+def get_missions(request):
+    return Mission.objects.all()
+
 
 @api.get("mission/{mission_id}/", response=MissionSchema)
 def get_mission(request, mission_id: int):
@@ -58,9 +70,9 @@ def get_mission(request, mission_id: int):
     mission = get_object_or_404(Mission, pk=mission_id)
     return mission
 
-@api.patch("mission-public/{mission_public_id}/")
-def patch_mission(request, mission_public_id: int):
-    mission_public = get_object_or_404(Mission, pk=mission_public_id)
+@api.patch("mission/{mission_id}/")
+def patch_mission(request, mission_id: int):
+    mission_public = get_object_or_404(Mission, pk=mission_id)
     raw = request.body  # bytes
     data = json.loads(raw.decode("utf-8")) if raw else {}
     if "chaos_pool" in data:

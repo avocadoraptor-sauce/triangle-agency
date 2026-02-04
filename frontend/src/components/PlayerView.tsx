@@ -4,6 +4,7 @@ import type { components } from "../../gen/schema"
 import './dmview.css';
 import axios from "axios";
 import { useParams } from "react-router";
+import { NumericLiteral } from "typescript";
 
 type Mission = components["schemas"]["MissionSchema"];
 type UpdateData = Partial<{
@@ -12,13 +13,18 @@ type UpdateData = Partial<{
   description: string;
 }>
 
-const DMView = () => {
+type PathParams = Partial<{
+  missionId: string;
+  playerId: string;
+}>
+
+const PlayerView = () => {
   const [mission, setMission] = useState<Mission>();
-  const { missionId } = useParams();
+  const { missionId, playerId } = useParams<PathParams>();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data: response} = await axios.get(`/api/mission/${missionId}`);
+        const {data: response} = await axios.get(`/api/mission/${missionId}/`);
         console.log(response);
         setMission(response);
       } catch(error) {
@@ -28,14 +34,8 @@ const DMView = () => {
     fetchData();
   }, [missionId]);
 
-  const updateMission = async (update_data: UpdateData) => {
-    try {
-      const {data: response} = await axios.patch(`/api/mission/${missionId}/`, update_data);
-      console.log(response);
-    } catch(error) {
-      console.error(error);
-    }
-  };
+  const player = playerId !== undefined && Number.isNaN(parseInt(playerId)) ? 
+    mission?.players[parseInt(playerId)] : undefined;
 
   return (
     <div className="wrap">
@@ -66,14 +66,10 @@ const DMView = () => {
             <div className="panel">
               <h3>Chaos Pool</h3>
               <div className="metric">{ mission?.chaos_pool ?? "—" }</div>
-              <button id="inc-chaos" onClick={() => updateMission({chaos_pool: 1})}>+</button>
-              <button id="dec-chaos" onClick={() => updateMission({chaos_pool: -1})}>-</button>
             </div>
             <div className="panel">
               <h3>Loose Ends</h3>
               <div className="metric">{ mission?.loose_ends ?? "—" }</div>
-              <button id="inc-loose-ends" onClick={() => updateMission({loose_ends: 1})}>+</button>
-              <button id="dec-loose-ends" onClick={() => updateMission({loose_ends: -1})}>-</button>
             </div>
             <div className="panel">
               <h3>Evidence Image</h3>
@@ -95,10 +91,7 @@ const DMView = () => {
               </div>
             </div>
             <div className="panel">
-              <h3>Players</h3>
-              <div className="description">
-                {mission?.players?.length ? mission.players.join(", ") : "No operatives assigned."}
-              </div>
+              {player?.player_name ?? "No Player selected."}
             </div>
           </div>
         </article>
@@ -108,4 +101,4 @@ const DMView = () => {
   );
 };
 
-export default DMView;
+export default PlayerView;
