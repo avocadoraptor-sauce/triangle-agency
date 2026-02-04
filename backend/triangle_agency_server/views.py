@@ -5,6 +5,8 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from ninja import ModelSchema, NinjaAPI
 from pydantic import computed_field
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from .models import Mission, Player, QualityAssurance
 
@@ -77,10 +79,18 @@ def patch_mission(request, mission_id: int):
     data = json.loads(raw.decode("utf-8")) if raw else {}
     if "chaos_pool" in data:
         mission_public.modify_chaos(data["chaos_pool"])
-        return {}
     if "loose_ends" in data:
         mission_public.modify_loose_ends(data["loose_ends"])
-        return {}
     if "description" in data:
         mission_public.modify_description(data["description"])
-        return {}
+
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        mission_public_id,
+        {
+            "type": "mission.update",
+            "mission": Mission.objects.get(id=mission_public_id)
+        }
+    )
+
+    return {}
