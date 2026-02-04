@@ -9,12 +9,14 @@
       "name": "Python Debugger: Django",
       "type": "debugpy",
       "request": "launch",
+      "cwd": "${workspaceFolder}/backend",
       "args": [
-        "runserver"
+        "triangle_agency.asgi:application",
+        "--reload"
       ],
       "django": true,
       "autoStartBrowser": false,
-      "program": "${workspaceFolder}/backend/manage.py"
+      "program": "${workspaceFolder}/backend/.venv/bin/uvicorn"
     }
   ]
 }

@@ -25,7 +25,7 @@ const MissionSelector = () => {
     <div className="wrap">
       <ul>
         {missions.map((missionSummary) => 
-          <li>
+          <li key={missionSummary.id}>
             <Link to={{pathname: `/mission/${missionSummary.id}`}}>
               {missionSummary.mission_name}: {missionSummary.description}
             </Link>

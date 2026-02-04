@@ -86,11 +86,11 @@ def patch_mission(request, mission_id: int):
 
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-        mission_public_id,
+        f"mission_{mission_id}",
         {
             "type": "mission.update",
-            "mission": Mission.objects.get(id=mission_public_id)
+            "mission": MissionSchema.from_orm(Mission.objects.get(id=mission_id)).dict()
         }
     )
-
     return {}
+

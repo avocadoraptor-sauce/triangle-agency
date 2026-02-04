@@ -2,7 +2,7 @@ import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from backend import triangle_agency_server
+from triangle_agency_server import routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'triangle_agency.settings')
 
@@ -13,7 +13,7 @@ application = ProtocolTypeRouter({
     "http": django_asgi_app,
     "websocket": AuthMiddlewareStack(
         URLRouter(
-            triangle_agency_server.routing.websocket_urlpatterns
+            routing.websocket_urlpatterns
         )
     ),
     # You can add other protocols here
