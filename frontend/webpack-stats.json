@@ -1,0 +1,21 @@
+{
+  "status": "done",
+  "assets": {
+    "main-97c46caaa88ac2ca8590.js": {
+      "name": "main-97c46caaa88ac2ca8590.js",
+      "path": "/home/phil/code/triangle-agency/backend/assets/webpack_bundles/main-97c46caaa88ac2ca8590.js",
+      "publicPath": "auto"
+    },
+    "node_modules_web-vitals_dist_web-vitals_js-a81ca6b0bf0261e59f0f.js": {
+      "name": "node_modules_web-vitals_dist_web-vitals_js-a81ca6b0bf0261e59f0f.js",
+      "path": "/home/phil/code/triangle-agency/backend/assets/webpack_bundles/node_modules_web-vitals_dist_web-vitals_js-a81ca6b0bf0261e59f0f.js",
+      "publicPath": "auto"
+    }
+  },
+  "chunks": {
+    "main": [
+      "main-97c46caaa88ac2ca8590.js"
+    ]
+  },
+  "publicPath": "auto"
+}

@@ -10,9 +10,9 @@ venv/
 ENV/
 *.log
 # webpack output dir.
-backend/assets
+# backend/assets # Not ignored for releases?!?!?
 # file to scan for django webpacker.
-frontend/webpack-stats.json
+# frontend/webpack-stats.json # Not ignored for release!?!?
 
 # React / Node
 node_modules/

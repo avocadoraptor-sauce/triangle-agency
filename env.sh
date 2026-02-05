@@ -25,7 +25,7 @@ alias shell="python3 manage.py shell"
 alias check=".githooks/pre-push"
 
 # Ensure node is set up for front-end.
-nodeenv -p
+#nodeenv -p
 
 # Hooks
 git config core.hooksPath .githooks

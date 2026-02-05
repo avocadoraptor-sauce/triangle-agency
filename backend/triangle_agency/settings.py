@@ -5,7 +5,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-change-me"
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "philipshao.pythonanywhere.com" ]
+CSRF_TRUSTED_ORIGINS = [ "https://philipshao.pythonanywhere.com" ]
 
 # TODO: Revisit before deploying to web.
 CORS_ORIGIN_ALLOW_ALL = True
