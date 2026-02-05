@@ -21,8 +21,11 @@ alias sqlmigrate="python3 manage.py sqlmigrate"
 alias showmigrations="python3 manage.py showmigrations"
 # Opens up a shell.
 alias shell="python3 manage.py shell"
-#Runs pre-push checks
+# Runs pre-push checks
 alias check=".githooks/pre-push"
+
+# Ensure node is set up for front-end.
+nodeenv -p
 
 # Hooks
 git config core.hooksPath .githooks

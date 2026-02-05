@@ -16,7 +16,7 @@
       ],
       "django": true,
       "autoStartBrowser": false,
-      "program": "${workspaceFolder}/backend/.venv/bin/uvicorn"
+      "program": "${workspaceFolder}/.venv/bin/uvicorn"
     }
   ]
 }
