@@ -21,10 +21,13 @@ const MissionLanding = () => {
       }
     }
     fetchData();
-  }, [missionId]);
+  }, []);
 
   const domain = window.location.origin;
-
+  if (mission === undefined) {
+    return <div>Loading...</div>;
+  }
+  console.log(mission);
   const dmURL = generatePath("/mission/:missionId/dm", {
     missionId: missionId ?? null
   });
@@ -46,8 +49,9 @@ const MissionLanding = () => {
             </Link>
         <h3>Players:</h3>
         <table>
+          <tbody>
             {playerLinks?.map((playerLink) => 
-            <tr>
+            <tr key={playerLink.name}>
                 <td>
                     {playerLink.name}
                 </td>
@@ -58,6 +62,7 @@ const MissionLanding = () => {
                 </td>
             </tr>
             )}
+          </tbody>
         </table>
     </div>
   );

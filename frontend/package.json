@@ -9,14 +9,13 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.126",
-    "@types/react": "^19.2.9",
-    "@types/react-dom": "^19.2.3",
     "axios": "^1.13.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-qr-code": "^2.0.18",
     "react-router": "^7.13.0",
     "react-scripts": "^5.0.1",
+    "react-use-websocket": "^4.13.0",
     "typescript": "^5.9.3",
     "web-vitals": "^2.1.4"
   },
@@ -25,6 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "pack": "npx webpack --mode=development --watch",
     "gentypes": "npx openapi-typescript http://127.0.0.1:8000/api/openapi.json -o gen/schema.d.ts"
   },
   "eslintConfig": {
@@ -45,8 +45,14 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8000",
+  "proxy": "localhost:8000",
   "devDependencies": {
-    "openapi-typescript": "^7.10.1"
+    "@types/react": "^19.2.11",
+    "@types/react-dom": "^19.2.3",
+    "html-webpack-plugin": "^5.6.6",
+    "openapi-typescript": "^7.10.1",
+    "ts-loader": "^9.5.4",
+    "webpack-bundle-tracker": "^3.2.3",
+    "webpack-cli": "^6.0.1"
   }
 }

@@ -9,6 +9,10 @@ env/
 venv/
 ENV/
 *.log
+# webpack output dir.
+backend/assets
+# file to scan for django webpacker.
+frontend/webpack-stats.json
 
 # React / Node
 node_modules/

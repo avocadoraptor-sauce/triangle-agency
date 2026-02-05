@@ -4,6 +4,7 @@ import type { components } from "../../gen/schema"
 import './dmview.css';
 import axios from "axios";
 import { useParams } from "react-router";
+import useWebSocket from "react-use-websocket";
 
 type Mission = components["schemas"]["MissionSchema"];
 type UpdateData = Partial<{
@@ -12,9 +13,14 @@ type UpdateData = Partial<{
   description: string;
 }>
 
+// TODO: Refactor websocket logic so it's common to both DMView and PlayerView.
+const SOCKET_URL = `ws://${window.location.hostname}:${window.location.port}/ws/mission/`;
+
 const DMView = () => {
-  const [mission, setMission] = useState<Mission>();
   const { missionId } = useParams();
+  const [mission, setMission] = useState<Mission>();
+  const { lastMessage } = useWebSocket<Mission>(`${SOCKET_URL}${missionId}/`);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,12 +32,18 @@ const DMView = () => {
       }
     }
     fetchData();
-  }, [missionId]);
+  }, []);
+
+
+  useEffect(() => {
+    if (lastMessage?.data !== undefined) {
+      setMission(JSON.parse(lastMessage?.data))
+    }
+  }, [lastMessage]);
 
   const updateMission = async (update_data: UpdateData) => {
     try {
-      const {data: response} = await axios.patch(`/api/mission/${missionId}/`, update_data);
-      console.log(response);
+      await axios.patch(`/api/mission/${missionId}/`, update_data);
     } catch(error) {
       console.error(error);
     }

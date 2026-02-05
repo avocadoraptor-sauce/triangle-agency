@@ -32,7 +32,7 @@ const PlayerView = () => {
       }
     }
     fetchData();
-  }, [missionId]);
+  }, []);
 
   const player = playerId !== undefined && Number.isNaN(parseInt(playerId)) ? 
     mission?.players[parseInt(playerId)] : undefined;
