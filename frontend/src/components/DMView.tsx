@@ -90,7 +90,18 @@ const DMView = () => {
             </div>
             <div className="panel">
               <h3>Description</h3>
-              <div className="description">
+              <div
+                className="description"
+                contentEditable={Boolean(mission)}
+                suppressContentEditableWarning
+                onBlur={(event) => {
+                  if (!mission) return;
+                  const nextDescription = (event.currentTarget.textContent ?? "").trim();
+                  if (!mission.description && nextDescription === "No description recorded.") return;
+                  setMission((prev) => (prev ? { ...prev, description: nextDescription } : prev));
+                  updateMission({ description: nextDescription });
+                }}
+              >
                 { mission?.description ?? "No description recorded." }
               </div>
             </div>
