@@ -14,7 +14,8 @@ type UpdateData = Partial<{
 }>
 
 // TODO: Refactor websocket logic so it's common to both DMView and PlayerView.
-const SOCKET_URL = `ws://${window.location.hostname}:${window.location.port}/ws/mission/`;
+const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+const SOCKET_URL = `${protocol}://${window.location.hostname}:${window.location.port}/ws/mission/`;
 
 const DMView = () => {
   const { missionId } = useParams();
