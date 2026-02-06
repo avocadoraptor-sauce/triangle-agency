@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/missions": {
+    "/api/missions/": {
         parameters: {
             query?: never;
             header?: never;
@@ -12,7 +12,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get Missions */
-        get: operations["triangle_agency_server_views_get_missions"];
+        get: operations["server_views_get_missions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -29,14 +29,14 @@ export interface paths {
             cookie?: never;
         };
         /** Get Mission */
-        get: operations["triangle_agency_server_views_get_mission"];
+        get: operations["server_views_get_mission"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
         /** Patch Mission */
-        patch: operations["triangle_agency_server_views_patch_mission"];
+        patch: operations["server_views_patch_mission"];
         trace?: never;
     };
 }
@@ -119,7 +119,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    triangle_agency_server_views_get_missions: {
+    server_views_get_missions: {
         parameters: {
             query?: never;
             header?: never;
@@ -139,7 +139,7 @@ export interface operations {
             };
         };
     };
-    triangle_agency_server_views_get_mission: {
+    server_views_get_mission: {
         parameters: {
             query?: never;
             header?: never;
@@ -161,7 +161,7 @@ export interface operations {
             };
         };
     };
-    triangle_agency_server_views_patch_mission: {
+    server_views_patch_mission: {
         parameters: {
             query?: never;
             header?: never;

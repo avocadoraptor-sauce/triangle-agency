@@ -9,10 +9,13 @@ env/
 venv/
 ENV/
 *.log
+
+# Django db. Pre-populate with env.sh
+server/db.sqlite3
 # webpack output dir.
-backend/assets
+static/webpack_bundles
 # file to scan for django webpacker.
-frontend/webpack-stats.json
+webpack-stats.json
 
 # React / Node
 node_modules/

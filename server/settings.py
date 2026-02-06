@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = "django-insecure-change-me"
 DEBUG = True
@@ -11,7 +11,7 @@ ALLOWED_HOSTS = []
 CORS_ORIGIN_ALLOW_ALL = True
 
 INSTALLED_APPS = [
-    "triangle_agency_server",
+    "server",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -32,7 +32,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
-ROOT_URLCONF = "triangle_agency.urls"
+ROOT_URLCONF = "server.urls"
 
 TEMPLATES = [
     {
@@ -49,8 +49,8 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "triangle_agency.wsgi.application"
-ASGI_APPLICATION = "triangle_agency.asgi.application"
+WSGI_APPLICATION = "server.wsgi.application"
+ASGI_APPLICATION = "server.asgi.application"
 
 DATABASES = {
     "default": {
@@ -86,17 +86,20 @@ CHANNEL_LAYERS = {
 """
 
 # Webpack config
+STATIC_ROOT = os.path.join(BASE_DIR.parent, 'static')
 
+"""
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'),
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR.parent, 'assets/'),
+    os.path.join(BASE_DIR.parent, 'static/'),
 )
+"""
 
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'webpack_bundles/',
         'CACHE': not DEBUG,
-        'STATS_FILE': os.path.join(BASE_DIR.parent, 'frontend', 'webpack-stats.json'),
+        'STATS_FILE': os.path.join(BASE_DIR.parent, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
     }

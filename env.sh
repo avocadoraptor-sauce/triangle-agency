@@ -24,8 +24,14 @@ alias shell="python3 manage.py shell"
 # Runs pre-push checks
 alias check=".githooks/pre-push"
 
+# Ensure basic test data is loaded.
+migrate
+manage loaddata data/sponge.json
+
 # Ensure node is set up for front-end.
 nodeenv -p
+# TODO: Clean up dependency conflicts.
+npm install --legacy-peer-deps
 
 # Hooks
 git config core.hooksPath .githooks

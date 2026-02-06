@@ -1,0 +1,93 @@
+[
+    {
+        "model": "server.mission",
+        "pk": 1,
+        "fields": {
+            "mission_name": "The Case of the Missing Sponge",
+            "chaos_pool": 4,
+            "loose_ends": 2,
+            "description": "An ordinary missing persons case, with an anomalous twist!",
+            "url": "https://i.imgur.com/DbJnXKI.png",
+            "players": [
+                1,
+                2
+            ]
+        }
+    },
+    {
+        "model": "server.qualityassurance",
+        "pk": 1,
+        "fields": {
+            "quality": "Attentiveness",
+            "player": 1,
+            "available_qas": 3,
+            "max_qas": 3
+        }
+    },
+    {
+        "model": "server.qualityassurance",
+        "pk": 2,
+        "fields": {
+            "quality": "Dynamism",
+            "player": 1,
+            "available_qas": 3,
+            "max_qas": 3
+        }
+    },
+    {
+        "model": "server.qualityassurance",
+        "pk": 3,
+        "fields": {
+            "quality": "Duplicity",
+            "player": 1,
+            "available_qas": 3,
+            "max_qas": 3
+        }
+    },
+    {
+        "model": "server.qualityassurance",
+        "pk": 4,
+        "fields": {
+            "quality": "Attentiveness",
+            "player": 2,
+            "available_qas": 3,
+            "max_qas": 3
+        }
+    },
+    {
+        "model": "server.qualityassurance",
+        "pk": 5,
+        "fields": {
+            "quality": "Duplicity",
+            "player": 2,
+            "available_qas": 3,
+            "max_qas": 3
+        }
+    },
+    {
+        "model": "server.qualityassurance",
+        "pk": 6,
+        "fields": {
+            "quality": "Dynamism",
+            "player": 2,
+            "available_qas": 3,
+            "max_qas": 3
+        }
+    },
+    {
+        "model": "server.player",
+        "pk": 1,
+        "fields": {
+            "player_name": "Phil S",
+            "missions": []
+        }
+    },
+    {
+        "model": "server.player",
+        "pk": 2,
+        "fields": {
+            "player_name": "Mary Y",
+            "missions": []
+        }
+    }
+] 

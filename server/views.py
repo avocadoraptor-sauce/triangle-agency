@@ -12,7 +12,7 @@ from .models import Mission, Player, QualityAssurance
 
 
 def load_json_data(file_name):
-    file_path = os.path.join(settings.BASE_DIR, 'static', file_name)
+    file_path = os.path.join(settings.BASE_DIR.parent, 'static', file_name)
     try:
         with open(file_path, 'r') as f:
             data = json.load(f) # deserializes the JSON data into a Python dictionary or list
