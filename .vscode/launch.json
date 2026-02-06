@@ -12,6 +12,8 @@
       "cwd": "${workspaceFolder}/backend",
       "args": [
         "triangle_agency.asgi:application",
+        "--host",
+        "0.0.0.0",
         "--reload"
       ],
       "django": true,
