@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('player_name', models.TextField(blank=True)),
-                ('missions', models.ManyToManyField(blank=True, to='triangle_agency_server.mission')),
+                ('missions', models.ManyToManyField(blank=True, to='server.mission')),
             ],
         ),
         migrations.CreateModel(
@@ -38,12 +38,12 @@ class Migration(migrations.Migration):
                 ('quality', models.TextField(choices=[('Attentiveness', 'Attentiveness'), ('Duplicity', 'Duplicity'), ('Dynamism', 'Dynamism'), ('Empathy', 'Empathy'), ('Initiative', 'Initiative'), ('Persistence', 'Persistence'), ('Presence', 'Presence'), ('Professionalism', 'Professionalism'), ('Subtlety', 'Subtlety')], default='Attentiveness')),
                 ('available_qas', models.IntegerField(default=3)),
                 ('max_qas', models.IntegerField(default=3)),
-                ('player', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='qas', to='triangle_agency_server.player')),
+                ('player', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='qas', to='server.player')),
             ],
         ),
         migrations.AddField(
             model_name='mission',
             name='players',
-            field=models.ManyToManyField(blank=True, to='triangle_agency_server.player'),
+            field=models.ManyToManyField(blank=True, to='server.player'),
         ),
     ]

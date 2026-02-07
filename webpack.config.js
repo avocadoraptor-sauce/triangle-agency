@@ -6,7 +6,7 @@ module.exports = {
   context: __dirname,
   entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "../backend/assets/webpack_bundles/"),
+    path: path.resolve(__dirname, "static/webpack_bundles/"),
     publicPath: "auto", // necessary for CDNs/S3/blob storages
     filename: "[name]-[contenthash].js",
   },

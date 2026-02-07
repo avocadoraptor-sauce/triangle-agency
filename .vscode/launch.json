@@ -9,9 +9,9 @@
       "name": "Python Debugger: Django",
       "type": "debugpy",
       "request": "launch",
-      "cwd": "${workspaceFolder}/backend",
+      "cwd": "${workspaceFolder}",
       "args": [
-        "triangle_agency.asgi:application",
+        "server.asgi:application",
         "--host",
         "0.0.0.0",
         "--reload"

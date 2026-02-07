@@ -25,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "pack": "npx webpack --mode=development --watch",
-    "gentypes": "npx openapi-typescript http://127.0.0.1:8000/api/openapi.json -o gen/schema.d.ts"
+    "gentypes": "npx openapi-typescript http://localhost:8000/api/openapi.json -o gen/schema.d.ts"
   },
   "eslintConfig": {
     "extends": [

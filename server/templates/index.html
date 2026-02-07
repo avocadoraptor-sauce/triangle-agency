@@ -1,9 +1,11 @@
 {% load render_bundle from webpack_loader %}
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <title>Example</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/png"/>
     {% render_bundle 'main' 'css' %}
   </head>
   
