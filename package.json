@@ -24,8 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pack": "npx webpack --mode=development --watch",
-    "gentypes": "npx openapi-typescript http://localhost:8000/api/openapi.json -o gen/schema.d.ts"
+    "pack": "webpack --mode=development --watch",
+    "gentypes": "openapi-typescript http://localhost:8000/api/openapi.json -o gen/schema.d.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -45,7 +45,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "localhost:8000",
+  "proxy": "http://localhost:8000",
   "devDependencies": {
     "@types/react": "^19.2.11",
     "@types/react-dom": "^19.2.3",
