@@ -11,6 +11,8 @@ type UpdateData = Partial<{
   chaos_pool: number;
   loose_ends: number;
   description: string;
+  qa_id: number;
+  qa_delta: number;
 }>
 
 // TODO: Refactor websocket logic so it's common to both DMView and PlayerView.
@@ -48,6 +50,10 @@ const DMView = () => {
     } catch(error) {
       console.error(error);
     }
+  };
+
+  const updateQaQuality = async (qaId: number, delta: number) => {
+    await updateMission({ qa_id: qaId, qa_delta: delta });
   };
 
   return (
@@ -110,7 +116,49 @@ const DMView = () => {
             <div className="panel">
               <h3>Players</h3>
               <div className="description">
-                {mission?.players?.length ? mission.players.join(", ") : "No operatives assigned."}
+                {mission?.players?.length ? (
+                  <div className="players-list">
+                    {mission.players.map((player, playerIndex) => (
+                      <div
+                        className="player-qas-card"
+                        key={player.id ?? `${player.player_name ?? "player"}-${playerIndex}`}
+                      >
+                        <div className="player-name">
+                          {player.player_name ?? `Player ${player.id ?? playerIndex + 1}`}
+                        </div>
+                        {player.qas?.length ? (
+                          player.qas.map((qa, qaIndex) => (
+                            <div
+                              className="qa-row"
+                              key={qa.id ?? `${qa.quality}-${qaIndex}`}
+                            >
+                              <div className="qa-label">{qa.quality}</div>
+                              <div className="qa-controls">
+                                <button
+                                  type="button"
+                                  onClick={() => qa.id && updateQaQuality(qa.id, -1)}
+                                  disabled={!qa.id}
+                                >
+                                  -
+                                </button>
+                                <span>{qa.available_qas}/{qa.max_qas}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => qa.id && updateQaQuality(qa.id, 1)}
+                                  disabled={!qa.id}
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="image-meta">No qualities assigned.</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : "No operatives assigned."}
               </div>
             </div>
           </div>

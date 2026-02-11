@@ -136,6 +136,54 @@ h1 {
   color: var(--ink);
 }
 
+.players-list {
+  display: grid;
+  gap: 10px;
+}
+
+.player-qas-card {
+  border: 1px solid rgba(90, 79, 67, 0.25);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.player-name {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.qa-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.qa-label {
+  font-size: 14px;
+}
+
+.qa-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qa-controls button {
+  min-width: 28px;
+  height: 24px;
+  border: 1px solid rgba(90, 79, 67, 0.4);
+  background: #f4efe6;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.qa-controls button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .image-block {
   display: grid;
   gap: 6px;

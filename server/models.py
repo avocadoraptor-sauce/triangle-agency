@@ -47,7 +47,12 @@ class QualityAssurance(models.Model):
 
     def __str__(self) -> str:
         return f"{self.player}: {self.quality}"
-    
+    def modify_available_qas(self, delta: int):
+        updated_value = max(0, min(self.max_qas, self.available_qas + delta))
+        QualityAssurance.objects.filter(pk=self.pk).update(
+            available_qas=updated_value
+        )
+
 class Player(models.Model):
     player_name= models.TextField(blank=True)
     missions = models.ManyToManyField(Mission, blank=True)
