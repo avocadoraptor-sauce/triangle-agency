@@ -87,6 +87,8 @@ def patch_mission(request, mission_id: int):
         qa = get_object_or_404(QualityAssurance, pk=data["qa_id"])
         # should this filter be at the model layer?
         if mission_public.players.filter(pk=qa.player_id).exists():
+            if "player_id" in data and qa.player_id != data["player_id"]:
+                return {"error": "QA does not belong to the supplied player_id."}
             qa.modify_available_qas(data["qa_delta"])
 
     channel_layer = get_channel_layer()
