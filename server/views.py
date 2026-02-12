@@ -90,6 +90,21 @@ def patch_mission(request, mission_id: int):
             quality=data["quality"],
             delta=data["qa_delta"]
         )
+    if "player_id" in data and "commendations" in data:
+        mission_public.modify_commendations(
+            player_id=data["player_id"],
+            delta=data["commendations"]
+        )
+    if "player_id" in data and "demerits" in data:
+        mission_public.modify_demerits(
+            player_id=data["player_id"],
+            delta=data["demerits"]
+        )
+    if "player_id" in data and "additional_burnout" in data:
+        mission_public.modify_additional_burnout(
+            player_id=data["player_id"],
+            delta=data["additional_burnout"]
+        )
 
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
