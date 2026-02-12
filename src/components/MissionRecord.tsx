@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { components } from "../../gen/schema";
 import { useParams } from "react-router";
+import MissionPlayer from "./MissionPlayer";
 
 type Mission = components["schemas"]["MissionSchema"];
 type UpdateData = Partial<{
@@ -132,64 +133,16 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
               <div className="description">
                 {mission?.players?.length ? (
                   <div className="players-list">
-                    {mission.players.map((player, playerIndex) => {
-                      const isSelectedPlayer = player.id === selectedPlayer?.id;
-
-                      return (
-                        <div
-                          className="player-qas-card"
-                          key={player.id ?? `${player.player_name ?? "player"}-${playerIndex}`}
-                        >
-                          <div className="player-name">
-                            {player.player_name ?? `Player ${player.id ?? playerIndex + 1}`}
-                          </div>
-                          {player.qas?.length ? (
-                            player.qas.map((qa, qaIndex) => (
-                              <div className="qa-row" key={qa.id ?? `${qa.quality}-${qaIndex}`}>
-                                <div className="qa-label">{qa.quality}</div>
-                                {ifDMView || isSelectedPlayer ? (
-                                  <div className="qa-controls">
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        if (qa.id && player.id != null) {
-                                          updateQaQuality(player.id, qa.quality, -1);
-                                        }
-                                      }}
-                                      disabled={!qa.id || player.id == null}
-                                    >
-                                      -
-                                    </button>
-                                    <span>
-                                      {qa.available_qas}/{qa.max_qas}
-                                    </span>
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        if (qa.id && player.id != null) {
-                                          updateQaQuality(player.id, qa.quality, 1);
-                                        }
-                                      }}
-                                      disabled={!qa.id || player.id == null}
-                                    >
-                                      +
-                                    </button>
-                                  </div>
-                                ) : (
-                                  <div className="qa-controls">
-                                    <span>
-                                      {qa.available_qas}/{qa.max_qas}
-                                    </span>
-                                  </div>
-                                )}
-                              </div>
-                            ))
-                          ) : (
-                            <div className="image-meta">No qualities assigned.</div>
-                          )}
-                        </div>
-                      );
-                    })}
+                    {mission.players.map((player, playerIndex) => (
+                      <MissionPlayer
+                        key={player.id ?? `${player.player_name ?? "player"}-${playerIndex}`}
+                        player={player}
+                        playerIndex={playerIndex}
+                        ifDMView={ifDMView}
+                        isSelectedPlayer={player.id === selectedPlayer?.id}
+                        updateQaQuality={updateQaQuality}
+                      />
+                    ))}
                   </div>
                 ) : (
                   "No operatives assigned."
