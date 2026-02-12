@@ -27,6 +27,9 @@ class Mission(models.Model):
         Mission.objects.filter(pk=self.pk).update(
             description=new_description
         )
+    def modify_qa(self, player_id: int, quality: str, delta: int):
+        qa = self.players.get(pk=player_id).qas.get(quality=quality)
+        qa.modify_available_qas(delta)
 
 class QualityAssurance(models.Model):
 

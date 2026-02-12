@@ -77,19 +77,19 @@ def patch_mission(request, mission_id: int):
     mission_public = get_object_or_404(Mission, pk=mission_id)
     raw = request.body  # bytes
     data = json.loads(raw.decode("utf-8")) if raw else {}
+    # TODO django framework to parse the body for fields?
     if "chaos_pool" in data:
         mission_public.modify_chaos(data["chaos_pool"])
     if "loose_ends" in data:
         mission_public.modify_loose_ends(data["loose_ends"])
     if "description" in data:
         mission_public.modify_description(data["description"])
-    if "qa_id" in data and "qa_delta" in data:
-        qa = get_object_or_404(QualityAssurance, pk=data["qa_id"])
-        # should this filter be at the model layer?
-        if mission_public.players.filter(pk=qa.player_id).exists():
-            if "player_id" in data and qa.player_id != data["player_id"]:
-                return {"error": "QA does not belong to the supplied player_id."}
-            qa.modify_available_qas(data["qa_delta"])
+    if "player_id" in data and "qa_delta" in data and "quality" in data:
+        mission_public.modify_qa(
+            player_id=data["player_id"],
+            quality=data["quality"],
+            delta=data["qa_delta"]
+        )
 
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(

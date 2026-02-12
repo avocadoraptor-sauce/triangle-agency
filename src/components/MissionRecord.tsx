@@ -7,7 +7,7 @@ type UpdateData = Partial<{
   chaos_pool: number;
   loose_ends: number;
   description: string;
-  qa_id: number;
+  quality: string;
   qa_delta: number;
   player_id: number;
 }>;
@@ -38,14 +38,14 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
     }
   };
 
-  const updateQaQuality = async (qaId: number, delta: number) => {
+  const updateQaQuality = async (playerId: number, quality: string, delta: number) => {
     if (ifDMView) {
-      await updateMission({ qa_id: qaId, qa_delta: delta });
+      await updateMission({ player_id: playerId, quality: quality, qa_delta: delta});
       return;
     }
 
     if (selectedPlayer?.id) {
-      await updateMission({ qa_id: qaId, qa_delta: delta, player_id: selectedPlayer.id });
+      await updateMission({ player_id: selectedPlayer.id, quality: quality, qa_delta: delta});
     }
   };
 
@@ -151,8 +151,12 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
                                   <div className="qa-controls">
                                     <button
                                       type="button"
-                                      onClick={() => qa.id && updateQaQuality(qa.id, -1)}
-                                      disabled={!qa.id}
+                                      onClick={() => {
+                                        if (qa.id && player.id != null) {
+                                          updateQaQuality(player.id, qa.quality, -1);
+                                        }
+                                      }}
+                                      disabled={!qa.id || player.id == null}
                                     >
                                       -
                                     </button>
@@ -161,8 +165,12 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
                                     </span>
                                     <button
                                       type="button"
-                                      onClick={() => qa.id && updateQaQuality(qa.id, 1)}
-                                      disabled={!qa.id}
+                                      onClick={() => {
+                                        if (qa.id && player.id != null) {
+                                          updateQaQuality(player.id, qa.quality, 1);
+                                        }
+                                      }}
+                                      disabled={!qa.id || player.id == null}
                                     >
                                       +
                                     </button>
