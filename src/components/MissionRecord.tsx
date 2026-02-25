@@ -11,6 +11,9 @@ type UpdateData = Partial<{
   quality: string;
   qa_delta: number;
   player_id: number;
+  commendations: number;
+  demerits: number;
+  additional_burnout: number;
 }>;
 
 type PathParams = Partial<{
@@ -47,6 +50,21 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
 
     if (selectedPlayer?.id) {
       await updateMission({ player_id: selectedPlayer.id, quality: quality, qa_delta: delta});
+    }
+  };
+
+  const updatePlayerStat = async (
+    playerId: number,
+    stat: "commendations" | "demerits" | "additional_burnout",
+    delta: number
+  ) => {
+    if (ifDMView) {
+      await updateMission({ player_id: playerId, [stat]: delta });
+      return;
+    }
+
+    if (selectedPlayer?.id) {
+      await updateMission({ player_id: selectedPlayer.id, [stat]: delta });
     }
   };
 
@@ -141,6 +159,7 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
                         ifDMView={ifDMView}
                         isSelectedPlayer={player.id === selectedPlayer?.id}
                         updateQaQuality={updateQaQuality}
+                        updatePlayerStat={updatePlayerStat}
                       />
                     ))}
                   </div>
