@@ -83,6 +83,21 @@ export interface components {
             id?: number | null;
             /** Player Name */
             player_name?: string | null;
+            /**
+             * Commendations
+             * @default 0
+             */
+            commendations: number;
+            /**
+             * Demerits
+             * @default 0
+             */
+            demerits: number;
+            /**
+             * Additional Burnout
+             * @default 0
+             */
+            additional_burnout: number;
             /** Missions */
             missions: number[];
         };
@@ -109,6 +124,27 @@ export interface components {
             max_qas: number;
             /** Description */
             readonly description: string;
+        };
+        /** MissionPatchBody */
+        MissionPatchBody: {
+            /** Chaos Pool */
+            chaos_pool?: number | null;
+            /** Loose Ends */
+            loose_ends?: number | null;
+            /** Description */
+            description?: string | null;
+            /** Player Id */
+            player_id?: number | null;
+            /** Qa Delta */
+            qa_delta?: number | null;
+            /** Quality */
+            quality?: string | null;
+            /** Commendations */
+            commendations?: number | null;
+            /** Demerits */
+            demerits?: number | null;
+            /** Additional Burnout */
+            additional_burnout?: number | null;
         };
     };
     responses: never;
@@ -170,7 +206,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MissionPatchBody"];
+            };
+        };
         responses: {
             /** @description OK */
             200: {

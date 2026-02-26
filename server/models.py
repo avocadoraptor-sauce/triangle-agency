@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import F
+from django.db.models.functions import Greatest, Least
 
 # Determine if relationship between Mission and Player is appropriate
 class Mission(models.Model):
@@ -27,6 +28,15 @@ class Mission(models.Model):
         Mission.objects.filter(pk=self.pk).update(
             description=new_description
         )
+    def modify_qa(self, player_id: int, quality: str, delta: int):
+        qa = self.players.get(pk=player_id).qas.get(quality=quality)
+        qa.modify_available_qas(delta)
+    def modify_commendations(self, player_id: int, delta: int):
+        self.players.get(pk=player_id).modify_commendations(delta)
+    def modify_demerits(self, player_id: int, delta: int):
+        self.players.get(pk=player_id).modify_demerits(delta)
+    def modify_additional_burnout(self, player_id: int, delta: int):
+        self.players.get(pk=player_id).modify_additional_burnout(delta)
 
 class QualityAssurance(models.Model):
 
@@ -48,9 +58,32 @@ class QualityAssurance(models.Model):
     def __str__(self) -> str:
         return f"{self.player}: {self.quality}"
     
+    def modify_available_qas(self, delta: int):
+        QualityAssurance.objects.filter(pk=self.pk).update(
+            available_qas=Least(Greatest(F("available_qas") + delta, 0), F("max_qas"))
+        )
+
 class Player(models.Model):
     player_name= models.TextField(blank=True)
     missions = models.ManyToManyField(Mission, blank=True)
+    commendations = models.IntegerField(default=0)
+    demerits = models.IntegerField(default=0)
+    additional_burnout = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return f"{self.player_name}"
+
+    def modify_commendations(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            commendations=Greatest(F("commendations") + delta, 0)
+        )
+
+    def modify_demerits(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            demerits=Greatest(F("demerits") + delta, 0)
+        )
+
+    def modify_additional_burnout(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            additional_burnout=Greatest(F("additional_burnout") + delta, 0)
+        )

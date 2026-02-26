@@ -1,9 +1,9 @@
 import json
 import os
-from typing import List
+from typing import List, Optional
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from ninja import ModelSchema, NinjaAPI
+from ninja import ModelSchema, NinjaAPI, Schema
 from pydantic import computed_field
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -57,6 +57,18 @@ class MissionSummarySchema(ModelSchema):
         fields = ["id", "mission_name", "description"]
 
 
+class MissionPatchBody(Schema):
+    chaos_pool: Optional[int] = None
+    loose_ends: Optional[int] = None
+    description: Optional[str] = None
+    player_id: Optional[int] = None
+    qa_delta: Optional[int] = None
+    quality: Optional[str] = None
+    commendations: Optional[int] = None
+    demerits: Optional[int] = None
+    additional_burnout: Optional[int] = None
+
+
 api = NinjaAPI()
 
 
@@ -73,16 +85,35 @@ def get_mission(request, mission_id: int):
     return mission
 
 @api.patch("mission/{mission_id}/")
-def patch_mission(request, mission_id: int):
+def patch_mission(request, mission_id: int, body: MissionPatchBody):
     mission_public = get_object_or_404(Mission, pk=mission_id)
-    raw = request.body  # bytes
-    data = json.loads(raw.decode("utf-8")) if raw else {}
-    if "chaos_pool" in data:
-        mission_public.modify_chaos(data["chaos_pool"])
-    if "loose_ends" in data:
-        mission_public.modify_loose_ends(data["loose_ends"])
-    if "description" in data:
-        mission_public.modify_description(data["description"])
+    if body.chaos_pool is not None:
+        mission_public.modify_chaos(body.chaos_pool)
+    if body.loose_ends is not None:
+        mission_public.modify_loose_ends(body.loose_ends)
+    if body.description is not None:
+        mission_public.modify_description(body.description)
+    if body.player_id is not None and body.qa_delta is not None and body.quality is not None:
+        mission_public.modify_qa(
+            player_id=body.player_id,
+            quality=body.quality,
+            delta=body.qa_delta
+        )
+    if body.player_id is not None and body.commendations is not None:
+        mission_public.modify_commendations(
+            player_id=body.player_id,
+            delta=body.commendations
+        )
+    if body.player_id is not None and body.demerits is not None:
+        mission_public.modify_demerits(
+            player_id=body.player_id,
+            delta=body.demerits
+        )
+    if body.player_id is not None and body.additional_burnout is not None:
+        mission_public.modify_additional_burnout(
+            player_id=body.player_id,
+            delta=body.additional_burnout
+        )
 
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
@@ -93,4 +124,3 @@ def patch_mission(request, mission_id: int):
         }
     )
     return {}
-
