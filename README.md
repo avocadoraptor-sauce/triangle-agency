@@ -90,4 +90,19 @@ TBD
 
 # Deploying to Production
 
-TBD
+Before starting, take care not to have any uncommitted changes.
+On your development machine, run the following command:
+```bash
+./release.sh
+```
+The release.sh file packages the front end using webpack and commits them to a release branch.
+
+On your 3rd party hosting website you will need to clone the available release branch. 
+If using a bash terminal, take the release branch name and replace it in the following command:
+```bash
+git clone -b <release/xxxxx> git@github.com:avocadoraptor-sauce/triangle-agency.git
+```
+Or if the clone is already available, simply pull & checkout to appropriate branch.
+
+From PythonAnywhere, you can then just reload the application to see the new changes.
+see url: https://www.pythonanywhere.com/user/<yourusername>/webapps
