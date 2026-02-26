@@ -1,0 +1,26 @@
+{
+  "status": "done",
+  "assets": {
+    "364.bundle.js": {
+      "name": "364.bundle.js",
+      "path": "/home/phil/code/triangle-agency/static/webpack_bundles/364.bundle.js",
+      "publicPath": "auto"
+    },
+    "bundle.js": {
+      "name": "bundle.js",
+      "path": "/home/phil/code/triangle-agency/static/webpack_bundles/bundle.js",
+      "publicPath": "auto"
+    },
+    "bundle.js.LICENSE.txt": {
+      "name": "bundle.js.LICENSE.txt",
+      "path": "/home/phil/code/triangle-agency/static/webpack_bundles/bundle.js.LICENSE.txt",
+      "publicPath": "auto"
+    }
+  },
+  "chunks": {
+    "main": [
+      "bundle.js"
+    ]
+  },
+  "publicPath": "auto"
+}
