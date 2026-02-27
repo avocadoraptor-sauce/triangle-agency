@@ -98,6 +98,36 @@ export interface components {
              * @default 0
              */
             additional_burnout: number;
+            /**
+             * Competency Level
+             * @default 0
+             */
+            competency_level: number;
+            /**
+             * Max Competency Level
+             * @default 30
+             */
+            max_competency_level: number;
+            /**
+             * Reality Level
+             * @default 0
+             */
+            reality_level: number;
+            /**
+             * Max Reality Level
+             * @default 30
+             */
+            max_reality_level: number;
+            /**
+             * Anomaly Level
+             * @default 0
+             */
+            anomaly_level: number;
+            /**
+             * Max Anomaly Level
+             * @default 30
+             */
+            max_anomaly_level: number;
             /** Missions */
             missions: number[];
         };
@@ -145,6 +175,18 @@ export interface components {
             demerits?: number | null;
             /** Additional Burnout */
             additional_burnout?: number | null;
+            /** Competency Level */
+            competency_level?: number | null;
+            /** Max Competency Level */
+            max_competency_level?: number | null;
+            /** Reality Level */
+            reality_level?: number | null;
+            /** Max Reality Level */
+            max_reality_level?: number | null;
+            /** Anomaly Level */
+            anomaly_level?: number | null;
+            /** Max Anomaly Level */
+            max_anomaly_level?: number | null;
         };
     };
     responses: never;

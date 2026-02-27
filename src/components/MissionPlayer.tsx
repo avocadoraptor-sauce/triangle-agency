@@ -10,7 +10,16 @@ type MissionPlayerProps = {
   updateQaQuality: (playerId: number, quality: string, delta: number) => void | Promise<void>;
   updatePlayerStat: (
     playerId: number,
-    stat: "commendations" | "demerits" | "additional_burnout",
+    stat:
+      | "commendations"
+      | "demerits"
+      | "additional_burnout"
+      | "competency_level"
+      | "max_competency_level"
+      | "reality_level"
+      | "max_reality_level"
+      | "anomaly_level"
+      | "max_anomaly_level",
     delta: number
   ) => void | Promise<void>;
 };
@@ -28,7 +37,16 @@ const MissionPlayer = ({
 
   const renderStatRow = (
     label: string,
-    stat: "commendations" | "demerits" | "additional_burnout",
+    stat:
+      | "commendations"
+      | "demerits"
+      | "additional_burnout"
+      | "competency_level"
+      | "max_competency_level"
+      | "reality_level"
+      | "max_reality_level"
+      | "anomaly_level"
+      | "max_anomaly_level",
     value: number | null | undefined
   ) => (
     <div className="qa-row" key={stat}>
@@ -75,6 +93,16 @@ const MissionPlayer = ({
       {renderStatRow("Commendations", "commendations", player.commendations)}
       {renderStatRow("Demerits", "demerits", player.demerits)}
       {renderStatRow("Additional Burnout", "additional_burnout", player.additional_burnout)}
+      {renderStatRow("Competency Level", "competency_level", player.competency_level)}
+      {renderStatRow(
+        "Max Competency Level",
+        "max_competency_level",
+        player.max_competency_level
+      )}
+      {renderStatRow("Reality Level", "reality_level", player.reality_level)}
+      {renderStatRow("Max Reality Level", "max_reality_level", player.max_reality_level)}
+      {renderStatRow("Anomaly Level", "anomaly_level", player.anomaly_level)}
+      {renderStatRow("Max Anomaly Level", "max_anomaly_level", player.max_anomaly_level)}
       {player.qas?.length ? (
         player.qas.map((qa, qaIndex) => (
           <div className="qa-row" key={qa.id ?? `${qa.quality}-${qaIndex}`}>

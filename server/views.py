@@ -67,6 +67,12 @@ class MissionPatchBody(Schema):
     commendations: Optional[int] = None
     demerits: Optional[int] = None
     additional_burnout: Optional[int] = None
+    competency_level: Optional[int] = None
+    max_competency_level: Optional[int] = None
+    reality_level: Optional[int] = None
+    max_reality_level: Optional[int] = None
+    anomaly_level: Optional[int] = None
+    max_anomaly_level: Optional[int] = None
 
 
 api = NinjaAPI()
@@ -113,6 +119,30 @@ def patch_mission(request, mission_id: int, body: MissionPatchBody):
         mission_public.modify_additional_burnout(
             player_id=body.player_id,
             delta=body.additional_burnout
+        )
+    if body.player_id is not None and body.competency_level is not None:
+        mission_public.players.get(pk=body.player_id).modify_competency_level(
+            delta=body.competency_level
+        )
+    if body.player_id is not None and body.max_competency_level is not None:
+        mission_public.players.get(pk=body.player_id).modify_max_competency_level(
+            delta=body.max_competency_level
+        )
+    if body.player_id is not None and body.reality_level is not None:
+        mission_public.players.get(pk=body.player_id).modify_reality_level(
+            delta=body.reality_level
+        )
+    if body.player_id is not None and body.max_reality_level is not None:
+        mission_public.players.get(pk=body.player_id).modify_max_reality_level(
+            delta=body.max_reality_level
+        )
+    if body.player_id is not None and body.anomaly_level is not None:
+        mission_public.players.get(pk=body.player_id).modify_anomaly_level(
+            delta=body.anomaly_level
+        )
+    if body.player_id is not None and body.max_anomaly_level is not None:
+        mission_public.players.get(pk=body.player_id).modify_max_anomaly_level(
+            delta=body.max_anomaly_level
         )
 
     channel_layer = get_channel_layer()
