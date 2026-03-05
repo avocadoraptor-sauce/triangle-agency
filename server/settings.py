@@ -5,8 +5,14 @@ BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = "django-insecure-change-me"
 DEBUG = True
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', "localhost").split(' ')
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_HOSTS', "").split(' ')
+
+
+def _env_list(name: str, default: str = "") -> list[str]:
+    return [value for value in os.environ.get(name, default).split() if value]
+
+
+ALLOWED_HOSTS = _env_list("ALLOWED_HOSTS", "localhost")
+CSRF_TRUSTED_ORIGINS = _env_list("CSRF_HOSTS")
 
 
 # TODO: Revisit before deploying to web.

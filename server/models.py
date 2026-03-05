@@ -69,9 +69,45 @@ class Player(models.Model):
     commendations = models.IntegerField(default=0)
     demerits = models.IntegerField(default=0)
     additional_burnout = models.IntegerField(default=0)
+    competency_level = models.IntegerField(default=0)
+    max_competency_level = models.IntegerField(default=30)
+    reality_level = models.IntegerField(default=0)
+    max_reality_level = models.IntegerField(default=30)
+    anomaly_level = models.IntegerField(default=0)
+    max_anomaly_level = models.IntegerField(default=30)
 
     def __str__(self) -> str:
         return f"{self.player_name}"
+
+    def modify_competency_level(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            competency_level=Least(Greatest(F("competency_level") + delta, 0), F("max_competency_level"))
+        )
+
+    def modify_reality_level(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            reality_level=Least(Greatest(F("reality_level") + delta, 0), F("max_reality_level"))
+        )
+
+    def modify_anomaly_level(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            anomaly_level=Least(Greatest(F("anomaly_level") + delta, 0), F("max_anomaly_level"))
+        )
+
+    def modify_max_competency_level(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            max_competency_level=Greatest(F("max_competency_level") + delta, 0)
+        )
+
+    def modify_max_reality_level(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            max_reality_level=Greatest(F("max_reality_level") + delta, 0)
+        )
+    
+    def modify_max_anomaly_level(self, delta: int):
+        Player.objects.filter(pk=self.pk).update(
+            max_anomaly_level=Greatest(F("max_anomaly_level") + delta, 0)
+        )
 
     def modify_commendations(self, delta: int):
         Player.objects.filter(pk=self.pk).update(

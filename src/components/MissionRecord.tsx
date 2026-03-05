@@ -14,6 +14,12 @@ type UpdateData = Partial<{
   commendations: number;
   demerits: number;
   additional_burnout: number;
+  competency_level: number;
+  max_competency_level: number;
+  reality_level: number;
+  max_reality_level: number;
+  anomaly_level: number;
+  max_anomaly_level: number;
 }>;
 
 type PathParams = Partial<{
@@ -55,7 +61,16 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
 
   const updatePlayerStat = async (
     playerId: number,
-    stat: "commendations" | "demerits" | "additional_burnout",
+    stat:
+      | "commendations"
+      | "demerits"
+      | "additional_burnout"
+      | "competency_level"
+      | "max_competency_level"
+      | "reality_level"
+      | "max_reality_level"
+      | "anomaly_level"
+      | "max_anomaly_level",
     delta: number
   ) => {
     if (ifDMView) {
