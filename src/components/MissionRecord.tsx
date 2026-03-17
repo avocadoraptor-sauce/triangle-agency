@@ -14,12 +14,6 @@ type UpdateData = Partial<{
   commendations: number;
   demerits: number;
   additional_burnout: number;
-  competency_level: number;
-  max_competency_level: number;
-  reality_level: number;
-  max_reality_level: number;
-  anomaly_level: number;
-  max_anomaly_level: number;
 }>;
 
 type PathParams = Partial<{
@@ -50,27 +44,18 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
 
   const updateQaQuality = async (playerId: number, quality: string, delta: number) => {
     if (ifDMView) {
-      await updateMission({ player_id: playerId, quality: quality, qa_delta: delta});
+      await updateMission({ player_id: playerId, quality, qa_delta: delta });
       return;
     }
 
     if (selectedPlayer?.id) {
-      await updateMission({ player_id: selectedPlayer.id, quality: quality, qa_delta: delta});
+      await updateMission({ player_id: selectedPlayer.id, quality, qa_delta: delta });
     }
   };
 
   const updatePlayerStat = async (
     playerId: number,
-    stat:
-      | "commendations"
-      | "demerits"
-      | "additional_burnout"
-      | "competency_level"
-      | "max_competency_level"
-      | "reality_level"
-      | "max_reality_level"
-      | "anomaly_level"
-      | "max_anomaly_level",
+    stat: "commendations" | "demerits" | "additional_burnout",
     delta: number
   ) => {
     if (ifDMView) {
@@ -84,109 +69,93 @@ const MissionRecord = ({ mission, ifDMView }: MissionRecordProps) => {
   };
 
   return (
-    <div className="wrap">
-      <header>
+    <div className="record-wrap">
+      <header className="record-header">
         <div>
-          <div className="title">Private Eye Dossier</div>
-          <h1>Mission Public Record</h1>
+          <div className="title">Triangle Agency</div>
+          <h1>Mission Record</h1>
         </div>
-        <div className="stamp">Classified</div>
       </header>
 
-      <section className="dossiers">
-        <article className="dossier">
-          <div className="dossier-header">
-            <div>
-              <div className="mission-id">Case File {mission?.id ?? "—"}</div>
-              <div>{mission?.mission_name ?? "Unassigned Mission"}</div>
-            </div>
-            <div className="status">Public Brief</div>
+      <section className="mission-priority-fields">
+        <div className="priority-field">
+          <h3>Mission Name</h3>
+          <div>{mission?.mission_name ?? "Unassigned Mission"}</div>
+        </div>
+        <div className="priority-field">
+          <h3>Chaos Pool</h3>
+          <div className="value-controls">
+            {ifDMView ? (
+              <button type="button" onClick={() => updateMission({ chaos_pool: -1 })}>
+                -
+              </button>
+            ) : null}
+            <span>{mission?.chaos_pool ?? 0}</span>
+            {ifDMView ? (
+              <button type="button" onClick={() => updateMission({ chaos_pool: 1 })}>
+                +
+              </button>
+            ) : null}
           </div>
-          <div className="grid">
-            <div className="panel">
-              <h3>Mission Name</h3>
-              <div className="metric">{mission?.mission_name ?? "Unassigned"}</div>
-            </div>
-            <div className="panel">
-              <h3>Chaos Pool</h3>
-              <div className="metric">{mission?.chaos_pool ?? "—"}</div>
-              {ifDMView ? (
-                <>
-                  <button id="inc-chaos" onClick={() => updateMission({ chaos_pool: 1 })}>
-                    +
-                  </button>
-                  <button id="dec-chaos" onClick={() => updateMission({ chaos_pool: -1 })}>
-                    -
-                  </button>
-                </>
-              ) : null}
-            </div>
-            <div className="panel">
-              <h3>Loose Ends</h3>
-              <div className="metric">{mission?.loose_ends ?? "—"}</div>
-              {ifDMView ? (
-                <>
-                  <button id="inc-loose-ends" onClick={() => updateMission({ loose_ends: 1 })}>
-                    +
-                  </button>
-                  <button id="dec-loose-ends" onClick={() => updateMission({ loose_ends: -1 })}>
-                    -
-                  </button>
-                </>
-              ) : null}
-            </div>
-            <div className="panel">
-              <h3>Evidence Image</h3>
-              <div className="image-block">
-                {mission?.url ? (
-                  <>
-                    <img
-                      src={mission.url}
-                      alt="Evidence"
-                      style={{
-                        width: "100%",
-                        border: "1px solid rgba(90, 79, 67, 0.3)",
-                      }}
-                    />
-                    <div className="image-meta">Archive: {mission.url}</div>
-                  </>
-                ) : (
-                  <div className="image-meta">No image on file.</div>
-                )}
-              </div>
-            </div>
-            <div className="panel">
-              <h3>Description</h3>
-              <div className="description">
-                {mission?.description ?? "No description recorded."}
-              </div>
-            </div>
-            <div className="panel">
-              <h3>Players</h3>
-              <div className="description">
-                {mission?.players?.length ? (
-                  <div className="players-list">
-                    {mission.players.map((player, playerIndex) => (
-                      <MissionPlayer
-                        key={player.id ?? `${player.player_name ?? "player"}-${playerIndex}`}
-                        player={player}
-                        playerIndex={playerIndex}
-                        ifDMView={ifDMView}
-                        isSelectedPlayer={player.id === selectedPlayer?.id}
-                        updateQaQuality={updateQaQuality}
-                        updatePlayerStat={updatePlayerStat}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  "No operatives assigned."
-                )}
-              </div>
-            </div>
+        </div>
+        <div className="priority-field">
+          <h3>Loose Ends</h3>
+          <div className="value-controls">
+            {ifDMView ? (
+              <button type="button" onClick={() => updateMission({ loose_ends: -1 })}>
+                -
+              </button>
+            ) : null}
+            <span>{mission?.loose_ends ?? 0}</span>
+            {ifDMView ? (
+              <button type="button" onClick={() => updateMission({ loose_ends: 1 })}>
+                +
+              </button>
+            ) : null}
+          </div>
+        </div>
+        <div className="priority-field mission-description">
+          <h3>Description</h3>
+          <div>{mission?.description ?? "No description recorded."}</div>
+        </div>
+      </section>
+
+      <section className="mission-secondary-fields">
+        <article className="panel">
+          <h3>Mission Fields</h3>
+          <div className="image-block">
+            {mission?.url ? (
+              <>
+                <img src={mission.url} alt="Evidence" className="evidence-image" />
+                <div className="image-meta">Archive: {mission.url}</div>
+              </>
+            ) : (
+              <div className="image-meta">No image on file.</div>
+            )}
           </div>
         </article>
+
+        <article className="panel">
+          <h3>Players</h3>
+          {mission?.players?.length ? (
+            <div className="players-list">
+              {mission.players.map((player, playerIndex) => (
+                <MissionPlayer
+                  key={player.id ?? `${player.player_name ?? "player"}-${playerIndex}`}
+                  player={player}
+                  playerIndex={playerIndex}
+                  ifDMView={ifDMView}
+                  isSelectedPlayer={player.id === selectedPlayer?.id}
+                  updateQaQuality={updateQaQuality}
+                  updatePlayerStat={updatePlayerStat}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="image-meta">No operatives assigned.</div>
+          )}
+        </article>
       </section>
-      <footer>Triangle Agency Bureau - Public Records</footer>
     </div>
   );
 };
