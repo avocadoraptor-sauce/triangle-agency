@@ -52,8 +52,8 @@ class QualityAssurance(models.Model):
         SUBTLETY = "Subtlety", "Subtlety"
     quality = models.TextField(choices=Quality.choices, default=Quality.ATTENTIVENESS, blank=False)
     player = models.ForeignKey("Player", editable=False, blank=False, on_delete=models.CASCADE, related_name="qas")
-    available_qas = models.IntegerField(default=3, blank=False)
-    max_qas = models.IntegerField(default=3, blank=False)
+    available_qas = models.IntegerField(default=0, blank=False)
+    max_qas = models.IntegerField(default=0, blank=False)
 
     def __str__(self) -> str:
         return f"{self.player}: {self.quality}"
