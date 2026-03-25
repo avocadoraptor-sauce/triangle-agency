@@ -105,7 +105,7 @@ export interface components {
             competency_level: number;
             /**
              * Max Competency Level
-             * @default 30
+             * @default 00
              */
             max_competency_level: number;
             /**
@@ -115,7 +115,7 @@ export interface components {
             reality_level: number;
             /**
              * Max Reality Level
-             * @default 30
+             * @default 00
              */
             max_reality_level: number;
             /**
@@ -125,7 +125,7 @@ export interface components {
             anomaly_level: number;
             /**
              * Max Anomaly Level
-             * @default 30
+             * @default 00
              */
             max_anomaly_level: number;
             /** Missions */
@@ -144,12 +144,12 @@ export interface components {
             player: number;
             /**
              * Available Qas
-             * @default 3
+             * @default 0
              */
             available_qas: number;
             /**
              * Max Qas
-             * @default 3
+             * @default 0
              */
             max_qas: number;
             /** Description */
